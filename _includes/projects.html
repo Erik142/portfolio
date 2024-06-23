@@ -1,29 +1,179 @@
 <div class="user-details">
-  <h1> Featured Projects </h1>
+  <h1>Featured Projects</h1>
 </div>
 <div class="user-projects">
-  <div class="images-right">
-    <img alt="mountains" src="{{ "/assets/img/mountains.jpg" | prepend: site.baseurl }}" />
+  <div>
+    <div class="project-title">
+      <h3>Minecraft server authentication through Discord</h3>
+    </div>
+    <div class="project-summary">
+      <div class="contents-left">
+        <ul>
+          <li>Minecraft server - Velocity proxy, PaperMC</li>
+          <li>Java - Minecraft plugin</li>
+          <li>PostgreSQL</li>
+          <li>Rust - Discord bot</li>
+        </ul>
+      </div>
+      <div class="images-right">
+        <img alt="mountains" src="{{ "/assets/img/minecraft-bot.png" | prepend:
+        site.baseurl }}" />
+      </div>
+    </div>
+  </div>
+  <p>
+    The purpose for this project was to solve an issue that I was facing when
+    attempting to host a private Minecraft server for me and my closest
+    friends. The problem I faced was: How do I keep the server private, while
+    hosting it openly on the internet? During my research, I could not
+    find a good solution for ensuring that only players that are part of a
+    specific Discord community could play on the Minecraft server. Minecraft
+    itself only supports white/blacklisting of IP addresses, which is not a
+    very user-friendly solution, and it only solves the problem if every player
+    has a static, public IP address, which I cannot ensure.
+  </p>
+  <p>
+    The solution I came up with was to have a PostgreSQL database which acts as
+    data storage for mappings between Discord and Minecraft usernames, player
+    logins on the Minecraft server, as well as successful authentication
+    requests and their expiration. The authentication flow is as follows:
+  </p>
+  <p>
+    A first-time registration occurs via Discord. The player sends a
+    registration request to the Discord bot. The Discord bot responds with a
+    corresponding registration command to enter from within Minecraft. This is
+    used to map the Discord username with the Minecraft username. After
+    entering the registration command in Minecraft, the player is now able to
+    log in to the Minecraft server.
+  </p>
+  <p>
+    The custom-made Minecraft Authentication plugin communicates with the
+    Discord bot through PostgreSQL events. The PostgreSQL events are used for
+    notifying the Discord bot that a particular player is trying to log in to
+    the Minecraft server. The Discord bot will send a private message to this
+    Discord user, asking whether or not they are trying to log in on the
+    Minecraft server. The user will answer by reacting using to the message
+    with one of two emojis. If the user reacts with the "✅" emoji, the player
+    is granted access to the Minecraft server. If the user reacts with "❌",
+    the user is kicked out from the Minecraft server.
+  </p>
+  <a class="project-link" href="https://github.com/Erik142/velocity-authentication">Minecraft Auth Plugin repo</a>
+  <a class="project-link" href="https://github.com/Erik142/minecraft-discord-auth">Discord Bot repo</a>
+</div>
+<div class="user-projects">
+  <div class="project-title">
+    <h3>Kubernetes cluster with Talos, Terragrunt and FluxCD</h3>
+  </div>
+  <div class="project-summary">
+    <div class="contents-left">
+      <ul>
+        <li>Talos</li>
+        <li>OpenTofu</li>
+        <li>Terragrunt</li>
+        <li>FluxCD</li>
+      </ul>
+    </div>
+    <div class="images-right">
+      <img alt="mountains" src="{{ "/assets/img/terragrunt.png" | prepend: site.baseurl
+      }}" />
+    </div>
   </div>
   <div class="contents">
-    <h3> Project Title </h3>
-    <ul>
-      <li> Featured Skills</li>
-    </ul>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <a class="project-link" href="#">Check it out</a>
+    <p>
+      I run a Kubernetes cluster on my private server, for educational
+      purposes. The Kubernetes cluster runs as virtual machines on top of
+      XCP-ng, which utilizes the Xen hypervisor. Deploying a HA Kubernetes
+      cluster using Virtual Machines with multiple worker nodes manually takes
+      me at least one hour, even if I do it frequently. The goal with this
+      project was to automatically deploy a Kubernetes cluster using
+      Infrastructure as Code (IaC) tools, as well as FluxCD for deploying
+      applications into the cluster, making it easy and quick to deploy and
+      destroy a Kubernetes cluster.
+    </p>
+    <p>
+      Terraform/OpenTofu is one of the most well-known IaC tools to date, and is used by many organisations to deploy bare-metal, as well as cloud infrastructure. OpenTofu does this really well, but there are two parts of an IaC deployment that is not handled very easily: Remote state, and inter-module dependencies. I am not the only one who has noticed this, which is why the community has created a tool to solve the problem: Terragrunt!
+    </p>
+    <p>
+      This project stores the OpenTofu modules in a separate git repository, which in turn is used by the Terragrunt git repository. The OpenTofu module repository contains modules for deploying Talos (a container optimized Linux distro) on XCP-ng, installing Cilium and Mayastor as the CNI and CSI plugins, setting up DHCP reservations for the Talos nodes on my Mikrotik router, adding DNS records for the Talos nodes on my Bind9 DNS server, as well as bootstrapping FluxCD in the cluster using my personal GitHub repository. The execution order, remote state, and dependencies between the OpenTofu modules is handled by Terragrunt, using the S3 compatible API of Backblaze B2 to store the OpenTofu state.
+    </p>
+    <p>
+      The solution is using industry standard tools, showcasing the power of IaC in an on-premise environment. Using this solution, I have effectively reduced the Kubernetes cluster deployment time to around 10 minutes, and the cluster creation is reproducible thanks to Terragrunt and OpenTofu.
+    </p>
+    <a class="project-link" href="https://github.com/Erik142/flux-personal">FluxCD GitOps repo</a>
+    <a class="project-link" href="https://github.com/Erik142/terraform-modules">Terraform modules repo</a>
+    <a class="project-link" href="https://github.com/Erik142/terragrunt-infra">Terragrunt repo</a>
   </div>
 </div>
 <div class="user-projects">
-  <div class="images-left">
-    <img alt="mountains" src="{{ "/assets/img/skate.jpg" | prepend: site.baseurl }}" />
+  <div class="project-title">
+    <h3>Hashicorp Vault Autounseal using 1Password</h3>
   </div>
-  <div class="contents-right">
-    <h3> Project Title </h3>
-    <ul>
-      <li> Featured Skills</li>
-    </ul>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <a class="project-link" href="#">Check it out</a>
+  <div class="project-summary">
+    <div class="contents-left">
+      <ul>
+        <li>Golang</li>
+        <li>Kubernetes Go SDK</li>
+        <li>1Password Connect Go SDK</li>
+        <li>FluxCD</li>
+        <li>Hashicorp Vault</li>
+      </ul>
+    </div>
+    <div class="images-right">
+      <img alt="mountains" src="{{ "/assets/img/vault-autounseal.png" | prepend: site.baseurl
+      }}" />
+    </div>
+  </div>
+  <div class="contents">
+    <p>
+      The goal with this project was to automate the tedious task of having to
+      manually unseal a Hashicorp Vault cluster that is deployed within
+      Kubernetes, each and every time a Vault Server Pod is restarted.
+    </p>
+    <p>I have deployed Hashicorp Vault in Kubernetes using FluxCD. Whenever
+      Flux is reconciling the Vault resources, it waits for the resources to
+      become ready. However, when using the Vault Helm chart from Hashicorp,
+      the server Pods do not reach a ready state until the Vault cluster has
+      been initialized and unsealed. Therefore, I needed a strategy to somehow
+      automatically unseal the Vault cluster. My research led me to the
+      conclusion that this problem has been solved within cloud environments,
+      using aKey Management Service (KMS) to automatically unseal the Vault
+      cluster. However, there was no solution for how to handle this in a Vault
+      cluster deployed within a Baremetal Kubernetes cluster.
+    </p>
+    <p>
+      Since I already use 1Password as my password manager of choice, I figured
+      that I could use 1Password as a "poor man's KMS", which led to the
+      creation of the project I call the "Vault 1Password Controller".
+    </p>
+    <p>
+      Vault 1Password Controller is a simple solution to the problem described
+      above. It is intended to run within the same Kubernetes cluster where
+      Vault is deployed, and it depends on having the 1Password operator
+      deployed within the same Kubernetes cluster, as well as having a
+      1Password Connect Server deployed (not necessarily within the same
+      Kubernetes cluster).
+    </p>
+    <p>
+      Vault 1Password Controller will continuously monitor the state of the
+      Vault server pods within the Kubernetes cluster. If the Vault cluster is
+      uninitialized, Vault 1Password Controller will initialize the Vault
+      cluster via the Vault API, and store the unseal keys as well as the root
+      token in a 1Password secret item of your choice. If the Vault cluster is
+      already initialized, with one or more Vault Server Pods in a "sealed"
+      state, 1Password Vault Controller will unseal the Vault Server Pods using
+      the unseal keys from the 1Password secret item of your choice. 1Password
+      secrets are stored using the 1Password Connect SDK, and they are
+      retrieved using the 1Password operator by means of creating a
+      "OnePasswordItem" object in the Kubernetes cluster, which in turn will
+      create a Kubernetes Secret object with the 1Password secret data.
+    </p>
+    <p>
+      By ensuring that 1Password Vault Controller has been deployed in the
+      Kubernetes cluster before deploying the Vault cluster itself, I ensure
+      that the Vault cluster is always in an initialized and unsealed state, as
+      well as that the corresponding Flux resources can be successfully
+      reconciled.
+    </p>
+    <a class="project-link" href="https://github.com/Erik142/vault-op-autounseal">Vault 1Password Controller repo</a>
   </div>
 </div>
