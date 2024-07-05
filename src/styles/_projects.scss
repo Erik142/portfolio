@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 90%;
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
   @media only screen and (min-width: $cut) {
     width: 80%;
@@ -52,8 +52,6 @@
     display: flex;
   }
   @media only screen and (max-width: $content-cut) {
-    // justify-content: center;
-    // justify: center;
     width: 100%;
   }
 }
@@ -88,12 +86,20 @@
     margin-left: auto; 
     margin-right: 0;
     float: right;
-    width: 48%;
+    width: 65%;
   }
   img {
     @media only screen and (min-width: $content-cut) {
       float: right;
     }
+    max-width: 100%;
+  }
+  video {
+    @media only screen and (min-width: $content-cut) {
+      float: right;
+    }
+    max-width: 100%;
+    height: auto;
   }
 }
 
